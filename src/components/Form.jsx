@@ -1,10 +1,18 @@
-import { Fragment } from 'react'
+import { Fragment, useContext } from 'react'
 import { MAKES, YEARS, PLANS } from '../constants'
+import QuoterContext from '../context/QuoterProvider'
 
 const Form = () => {
-  console.log(YEARS)
+  const { modal, setModal } = useContext(QuoterContext)
+
+  console.log(modal)
   return (
     <>
+      <button
+        onClick={() => setModal(true)}
+      >
+        Change the Modal Context
+      </button>
 
       <form>
         <div className="my-5">
