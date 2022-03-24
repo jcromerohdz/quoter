@@ -1,25 +1,22 @@
-import { Fragment, useContext } from 'react'
+import { Fragment } from 'react'
 import { MAKES, YEARS, PLANS } from '../constants'
-import QuoterContext from '../context/QuoterProvider'
+import useQuoter from '../hooks/useQuoter'
 
 const Form = () => {
-  const { modal, setModal } = useContext(QuoterContext)
 
-  console.log(modal)
+  const { data, handleChangeData } = useQuoter()
+
   return (
     <>
-      <button
-        onClick={() => setModal(true)}
-      >
-        Change the Modal Context
-      </button>
 
       <form>
         <div className="my-5">
           <label className="block mb-3 font-bold text-gray-400 uppercase">Make</label>
           <select 
-            name="brand" 
+            name="make" 
             className="w-full p-3 bg-white border border-gray-200"
+            onChange={ e => handleChangeData(e)}
+            value={data.make}
             id="">
               <option value="">-- Select Make --</option>
               {MAKES.map(make => (
@@ -36,8 +33,10 @@ const Form = () => {
         <div className="my-5">
           <label className="block mb-3 font-bold text-gray-400 uppercase">Year</label>
           <select 
-            name="brand" 
+            name="year" 
             className="w-full p-3 bg-white border border-gray-200"
+            onChange={ e => handleChangeData(e)}
+            value={data.year}
             id="">
               <option value="">-- Select Year --</option>
               {YEARS.map(year => (
@@ -57,7 +56,12 @@ const Form = () => {
             {PLANS.map(plan => (
               <Fragment key={plan.id}>
                 <label>{plan.name}</label>
-                <input type="radio" name='plan' value={plan.id} />
+                <input 
+                  type="radio" 
+                  name='plan' 
+                  value={plan.id} 
+                  onChange={ e => handleChangeData(e)}
+                />
               </Fragment>
             ))}
 
