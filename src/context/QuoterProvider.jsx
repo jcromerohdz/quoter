@@ -14,6 +14,7 @@ const QuoterProvider = ({children}) => {
 
   const [error, setError] = useState('')
   const [result, setResult] = useState(0)
+  const [loading, setLoading] = useState(false)
 
   const handleChangeData = e => {
     setData({
@@ -43,7 +44,11 @@ const QuoterProvider = ({children}) => {
     // Complete Plan 50% more
     result *= computePlan(data.plan)
     result = currencyFormat(result)
-    setResult(result)
+    setLoading(true)
+    setTimeout(() => {
+      setResult(result)
+      setLoading(false)
+    }, 3000)
   }
 
   return(
@@ -55,7 +60,9 @@ const QuoterProvider = ({children}) => {
         handleChangeData,
         setError,
         error,
-        quoteInsurance
+        quoteInsurance,
+        result,
+        loading
       }}
     >
       {children}
