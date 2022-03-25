@@ -1,15 +1,32 @@
 import { Fragment } from 'react'
 import { MAKES, YEARS, PLANS } from '../constants'
+import Error from './Error'
 import useQuoter from '../hooks/useQuoter'
 
 const Form = () => {
 
-  const { data, handleChangeData } = useQuoter()
+  const { data, handleChangeData, error, setError, quoteInsurance } = useQuoter()
+
+  const handleSubmit = e => {
+    e.preventDefault()
+
+    if(Object.values(data).includes('')){
+      setError('All fields are required!')
+      return
+    }
+
+    setError('')
+    quoteInsurance()
+  }
+
 
   return (
     <>
+      {error && <Error />}
 
-      <form>
+      <form
+        onSubmit={handleSubmit}
+      >
         <div className="my-5">
           <label className="block mb-3 font-bold text-gray-400 uppercase">Make</label>
           <select 
